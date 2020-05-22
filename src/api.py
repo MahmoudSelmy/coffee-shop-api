@@ -61,6 +61,9 @@ def post_new_drink():
         drink = DrinkAccess.create_new_drink(data)
     except ValueError:
         abort(400)
+    except Exception as e:
+        print(e)
+        abort(500)
     drinks = [drink.long()]
     response = jsonify({
         'success': True,

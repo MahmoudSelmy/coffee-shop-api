@@ -1,5 +1,5 @@
 from .models import Drink
-
+import json
 
 class DrinkAccess:
     @classmethod
@@ -25,7 +25,7 @@ class DrinkAccess:
         recipe = data.get('recipe', None)
         if title is None or recipe is None:
             raise ValueError(' Invalid data')
-        drink = Drink(title=title, recipe=recipe)
+        drink = Drink(title=title, recipe=json.dumps(recipe))
         drink.insert()
         return drink
 

@@ -54,6 +54,9 @@ class Drink(db.Model):
     short()
         short form representation of the Drink model
     '''
+    def __init__(self, title, recipe):
+        self.title = title
+        self.recipe = recipe
 
     def short(self):
         print(json.loads(self.recipe))
