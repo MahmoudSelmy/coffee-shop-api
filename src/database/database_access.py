@@ -1,4 +1,4 @@
-from .models import Drink, db
+from .models import Drink
 
 
 class DrinkAccess:
