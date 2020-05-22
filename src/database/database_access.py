@@ -45,7 +45,10 @@ class DrinkAccess:
             drink.title = title
         if recipe is not None:
             drink.recipe = """{}""".format(recipe)
-
         drink.update()
-
         return drink
+
+    @classmethod
+    def delete_drink(cls, drink_id):
+        drink = cls.get_drink_by_id(drink_id)
+        drink.delete()

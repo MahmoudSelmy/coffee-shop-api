@@ -87,7 +87,7 @@ def update_drink(drink_id):
     try:
         drink = DrinkAccess.update_drink(drink_id, data)
     except ValueError:
-        abort(400)
+        abort(404)
     drinks = [drink.long()]
     response = jsonify({
         'success': True,
@@ -99,13 +99,24 @@ def update_drink(drink_id):
 '''
 @TODO implement endpoint
     DELETE /drinks/<id>
-        where <id> is the existing model id
-        it should respond with a 404 error if <id> is not found
-        it should delete the corresponding row for <id>
         it should require the 'delete:drinks' permission
-    returns status code 200 and json {"success": True, "delete": id} where id is the id of the deleted record
-        or appropriate status code indicating reason for failure
 '''
+
+
+@app.route('/drinks/<int:drink_id>', methods=['DELETE'])
+def delete_drink(drink_id):
+    if drink_id is None:
+        abort(422)
+    try:
+        DrinkAccess.delete_drink(drink_id)
+    except ValueError:
+        abort(404)
+    response = jsonify({
+        'success': True,
+        'delete': drink_id
+    })
+    return response
+
 
 ## Error Handling
 '''
