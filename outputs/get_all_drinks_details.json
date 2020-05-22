@@ -1,0 +1,27 @@
+{
+    "drinks": [
+        {
+            "id": 1,
+            "recipe": [
+                {
+                    "color": "#79d70f",
+                    "name": "Kiwi",
+                    "parts": 1
+                }
+            ],
+            "title": "Kiwi"
+        },
+        {
+            "id": 2,
+            "recipe": [
+                {
+                    "color": "#d32626",
+                    "name": "strawberry",
+                    "parts": 1
+                }
+            ],
+            "title": "Strawberry"
+        }
+    ],
+    "success": true
+}

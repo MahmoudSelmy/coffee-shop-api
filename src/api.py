@@ -19,7 +19,7 @@ CORS(app)
 '''
 
 
-# db_drop_and_create_all()
+db_drop_and_create_all()
 
 
 @app.route('/drinks')
@@ -65,8 +65,7 @@ def post_new_drink():
     except ValueError:
         abort(400)
     except Exception as e:
-        print(e)
-        abort(500)
+        abort(400, str(e))
     drinks = [drink.long()]
     response = jsonify({
         'success': True,
@@ -111,7 +110,7 @@ def delete_drink(drink_id):
     try:
         DrinkAccess.delete_drink(drink_id)
     except ValueError:
-        abort(404)
+        abort(400)
     response = jsonify({
         'success': True,
         'delete': drink_id
@@ -126,6 +125,24 @@ def un_processable(error):
         "error": 422,
         "message": "un-processable"
     }), 422
+
+
+@app.errorhandler(401)
+def un_authorized(error):
+    return jsonify({
+        "success": False,
+        "error": 401,
+        "message": "un-authorized"
+    }), 401
+
+
+@app.errorhandler(403)
+def forbidden(error):
+    return jsonify({
+        "success": False,
+        "error": 403,
+        "message": "forbidden"
+    }), 403
 
 
 @app.errorhandler(400)

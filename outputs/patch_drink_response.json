@@ -1,0 +1,16 @@
+{
+    "drinks": [
+        {
+            "id": 1,
+            "recipe": [
+                {
+                    "color": "#79d70f",
+                    "name": "Kiwi",
+                    "parts": 1
+                }
+            ],
+            "title": "Water"
+        }
+    ],
+    "success": true
+}

@@ -25,6 +25,8 @@ class DrinkAccess:
         recipe = data.get('recipe', None)
         if title is None or recipe is None:
             raise ValueError(' Invalid data')
+        if isinstance(recipe, dict):
+            recipe = [recipe]
         drink = Drink(title=title, recipe=json.dumps(recipe))
         drink.insert()
         return drink

@@ -1,0 +1,8 @@
+{
+    "title": "Water",
+    "recipe": {
+        "name": "Water",
+        "color": "blue",
+        "parts": 1
+    }
+}
