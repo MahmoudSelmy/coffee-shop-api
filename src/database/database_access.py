@@ -21,11 +21,31 @@ class DrinkAccess:
 
     @classmethod
     def create_new_drink(cls, data):
-        try:
-            title = data['title']
-            recipe = """{}""".format(data['recipe'])
-        except KeyError:
+        title = data.get('title', None)
+        recipe = data.get('recipe', None)
+        if title is None or recipe is None:
             raise ValueError(' Invalid data')
         drink = Drink(title=title, recipe=recipe)
         drink.insert()
+        return drink
+
+    @classmethod
+    def get_drink_by_id(cls, drink_id):
+        drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
+        if drink is None:
+            ValueError('Invalid drink_id')
+        return drink
+
+    @classmethod
+    def update_drink(cls, drink_id, data):
+        drink = cls.get_drink_by_id(drink_id)
+        title = data.get('title', None)
+        recipe = data.get('recipe', None)
+        if title is not None:
+            drink.title = title
+        if recipe is not None:
+            drink.recipe = """{}""".format(recipe)
+
+        drink.update()
+
         return drink
