@@ -18,6 +18,7 @@ CORS(app)
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
 
+
 # db_drop_and_create_all()
 
 
@@ -38,6 +39,7 @@ def get_all_drinks():
 
 
 @app.route('/drinks-detail')
+@requires_auth('get:drinks-detail')
 def get_all_drinks_detail():
     response = jsonify({
         'success': True,
@@ -54,6 +56,7 @@ def get_all_drinks_detail():
 
 
 @app.route('/drinks', methods=['POST'])
+@requires_auth('post:drinks')
 def post_new_drink():
     data = request.get_json()
     drink = None
@@ -80,6 +83,7 @@ def post_new_drink():
 
 
 @app.route('/drinks/<int:drink_id>', methods=['PATCH'])
+@requires_auth('patch:drinks')
 def update_drink(drink_id):
     if drink_id is None:
         abort(422)
@@ -99,14 +103,8 @@ def update_drink(drink_id):
     return response
 
 
-'''
-@TODO implement endpoint
-    DELETE /drinks/<id>
-        it should require the 'delete:drinks' permission
-'''
-
-
 @app.route('/drinks/<int:drink_id>', methods=['DELETE'])
+@requires_auth('delete:drinks')
 def delete_drink(drink_id):
     if drink_id is None:
         abort(422)
@@ -146,6 +144,7 @@ def not_found(error):
         "error": 404,
         "message": "resource not found"
     }), 404
+
 
 '''
 @TODO implement error handler for AuthError
