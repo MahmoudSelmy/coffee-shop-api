@@ -4,7 +4,8 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from .database.models import db_drop_and_create_all, setup_db, Drink
+from .database.models import db_drop_and_create_all, setup_db
+from .database.database_access import DrinkAccess
 from .auth.auth import AuthError, requires_auth
 
 app = Flask(__name__)
@@ -30,6 +31,15 @@ db_drop_and_create_all()
 '''
 
 
+@app.route('/drinks')
+def get_all_drinks():
+    response = jsonify({
+        'success': True,
+        'drinks': DrinkAccess.get_all_drinks_short()
+    })
+    return response
+
+
 '''
 @TODO implement endpoint
     GET /drinks-detail
@@ -38,7 +48,6 @@ db_drop_and_create_all()
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
-
 
 '''
 @TODO implement endpoint
@@ -49,7 +58,6 @@ db_drop_and_create_all()
     returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
 '''
-
 
 '''
 @TODO implement endpoint
@@ -63,7 +71,6 @@ db_drop_and_create_all()
         or appropriate status code indicating reason for failure
 '''
 
-
 '''
 @TODO implement endpoint
     DELETE /drinks/<id>
@@ -75,18 +82,20 @@ db_drop_and_create_all()
         or appropriate status code indicating reason for failure
 '''
 
-
 ## Error Handling
 '''
 Example error handling for unprocessable entity
 '''
+
+
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
-                    "success": False, 
-                    "error": 422,
-                    "message": "unprocessable"
-                    }), 422
+        "success": False,
+        "error": 422,
+        "message": "unprocessable"
+    }), 422
+
 
 '''
 @TODO implement error handlers using the @app.errorhandler(error) decorator
@@ -103,7 +112,6 @@ def unprocessable(error):
 @TODO implement error handler for 404
     error handler should conform to general task above 
 '''
-
 
 '''
 @TODO implement error handler for AuthError
