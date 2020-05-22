@@ -18,3 +18,14 @@ class DrinkAccess:
         drinks = cls.get_all_drinks()
         drinks = [drink.long() for drink in drinks]
         return drinks
+
+    @classmethod
+    def create_new_drink(cls, data):
+        try:
+            title = data['title']
+            recipe = """{}""".format(data['recipe'])
+        except KeyError:
+            raise ValueError(' Invalid data')
+        drink = Drink(title=title, recipe=recipe)
+        drink.insert()
+        return drink

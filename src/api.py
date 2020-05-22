@@ -56,6 +56,23 @@ def get_all_drinks_detail():
         or appropriate status code indicating reason for failure
 '''
 
+
+@app.route('/drinks', methods=['POST'])
+def post_new_drink():
+    data = request.get_json()
+    drink = None
+    try:
+        drink = DrinkAccess.create_new_drink(data)
+    except ValueError:
+        abort(400)
+    drinks = [drink.short()]
+    response = jsonify({
+        'success': True,
+        'drinks': drinks
+    })
+    return response
+
+
 '''
 @TODO implement endpoint
     PATCH /drinks/<id>
